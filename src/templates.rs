@@ -27,6 +27,7 @@ fn head(title: &str, extra_head: &str) -> String {
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{title}</title>
 <link rel="manifest" href="/manifest.webmanifest">
+<link rel="icon" type="image/png" href="/icons/icon-192.png">
 <meta name="theme-color" content="{THEME_COLOR}">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -105,6 +106,12 @@ mod tests {
         assert!(html.contains("<title>Título</title>"));
         assert!(html.contains("<p>corpo</p>"));
         assert!(html.contains("Pico CSS"), "CSS do Pico deve estar embutido");
+    }
+
+    #[test]
+    fn page_includes_favicon_link() {
+        let html = page("t", "b");
+        assert!(html.contains(r#"<link rel="icon" type="image/png" href="/icons/icon-192.png">"#));
     }
 
     #[test]
