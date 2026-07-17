@@ -1,0 +1,46 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+    tags: ["v*"]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - run: cargo test --verbose
+
+  build-musl:
+    runs-on: ubuntu-latest
+    container: rust:alpine
+    steps:
+      - uses: actions/checkout@v4
+      - run: apk add --no-cache musl-dev build-base
+      - run: cargo build --release
+      - uses: actions/upload-artifact@v4
+        with:
+          name: logseq-webview-x86_64-linux-musl
+          path: target/release/logseq-webview
+          if-no-files-found: error
+
+  release:
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: [test, build-musl]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: logseq-webview-x86_64-linux-musl
+      - run: |
+          mv logseq-webview logseq-webview-x86_64-linux-musl
+          chmod +x logseq-webview-x86_64-linux-musl
+      - uses: softprops/action-gh-release@v2
+        with:
+          files: logseq-webview-x86_64-linux-musl

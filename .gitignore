@@ -2,11 +2,15 @@ AGENTS.md
 CLAUDE.md
 docs/
 
+# Scripts de deploy específicos do homelab (IPs internos da LXC/Caddy/desktop)
+scripts/
+
 # Rust
 /target
 
 # Token da API — nunca versionado (docs/visao.md, ## Token da API)
 .env
+.env.production
 
 # Debug/trace de sessões de browser automation (claude-in-chrome/Playwright)
 .playwright-mcp/
