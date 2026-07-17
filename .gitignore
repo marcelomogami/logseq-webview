@@ -14,3 +14,6 @@ scripts/
 
 # Debug/trace de sessões de browser automation (claude-in-chrome/Playwright)
 .playwright-mcp/
+
+# Estado local do Claude Code
+.claude/
