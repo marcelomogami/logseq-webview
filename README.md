@@ -68,6 +68,10 @@ cargo test    # unit tests, no running Logseq instance required
 cargo run     # requires Logseq desktop running with the HTTP API enabled
 ```
 
+## Changelog
+
+See [CHANGELOG.md](CHANGELOG.md).
+
 ## License
 
 MIT — see [LICENSE](LICENSE).
